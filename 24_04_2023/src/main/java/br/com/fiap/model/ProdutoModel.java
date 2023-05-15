@@ -42,9 +42,7 @@ public class ProdutoModel {
 	private MarcaModel marca;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "TB_PRODUTO_LOJA",
-	joinColumns = @JoinColumn(name = "ID", referencedColumnName = "ID"),
-	inverseJoinColumns = @JoinColumn(name = "ID_LOJA", referencedColumnName = "ID_LOJA"))
+	@JoinTable(name = "TB_PRODUTO_LOJA", joinColumns = @JoinColumn(name = "ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_LOJA", referencedColumnName = "ID_LOJA"))
 	private List<LojaModel> lojas;
 
 	public ProdutoModel() {
@@ -141,5 +139,6 @@ public class ProdutoModel {
 	public void setMarca(MarcaModel marca) {
 		this.marca = marca;
 	}
+
 
 }

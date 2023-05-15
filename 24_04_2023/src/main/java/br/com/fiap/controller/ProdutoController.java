@@ -1,7 +1,9 @@
 package br.com.fiap.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,15 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.fiap.model.CategoriaModel;
 import br.com.fiap.model.ProdutoModel;
 import br.com.fiap.repository.CategoriaRepository;
 import br.com.fiap.repository.MarcaRepository;
 import br.com.fiap.repository.ProdutoRepository;
 import jakarta.validation.Valid;
 
-@Controller
+@RestController
 @RequestMapping("/produto")
 public class ProdutoController {
 	
@@ -34,10 +38,26 @@ public class ProdutoController {
 	@Autowired
 	private MarcaRepository marcaRepository;
 
-	@GetMapping()
-	public String findAll(Model model) {
-		model.addAttribute("produtos", repository.findAll());
-		return PRODUTO_FOLDER + "produtos";
+//	@GetMapping()
+//	public void findAll(Model model) {
+//		//model.addAttribute("produtos", repository.findAll());
+//		
+//		//model.addAttribute("produtos", repository.findAll());
+//		
+//		int i = 0;
+//		List<ProdutoModel> lista = null;
+//		
+//		while(repository.findAll().get(i) != null) {
+//			lista.add(repository.findAll().get(i));
+//			i++;
+//		}
+//		
+//		System.out.println(lista);
+//	}
+	
+	@GetMapping("/ola")
+	public ResponseEntity<List<CategoriaModel>> wendel() {
+		return ResponseEntity.ok().body(categoriaRepository.findAll());
 	}
 	
 	@GetMapping("/form")
@@ -88,7 +108,8 @@ public class ProdutoController {
 	public String update(@PathVariable("id") long id, Model model,@Valid ProdutoModel produtoModel,BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		produtoModel.setId(id);
-		repository.save(produtoModel);
+		//repository.save(produtoModel);
+		repository.updateProductNameAndSku(produtoModel.getNome(), produtoModel.getSku(), produtoModel.getId());
 		redirectAttributes.addFlashAttribute("messages", "Produto atualizado com sucesso!");
 		model.addAttribute("produto", repository.findAll());
 		return "redirect:/produto";
@@ -96,7 +117,8 @@ public class ProdutoController {
 
 	@DeleteMapping("/{id}")
 	public String delete(@PathVariable("id") long id, Model model, RedirectAttributes redirectAttributes) {
-		repository.deleteById(id);
+		//repository.deleteById(id);
+		repository.excluirProduto(id);
 		redirectAttributes.addFlashAttribute("messages", "Produto excluido com sucesso!");
 		model.addAttribute("produtos", repository.findAll());
 		return "redirect:/produto";
