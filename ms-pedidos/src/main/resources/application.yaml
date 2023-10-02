@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: test
+  jpa:
+    open-in-view: false
+  #Nome da Aplicação
+  application:
+    name: ms-pedidos
+
+
+#LocalHost que o eureka server esta recebendo as requisições
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+#Define a porta do serviço
+server:
+  port: 0
