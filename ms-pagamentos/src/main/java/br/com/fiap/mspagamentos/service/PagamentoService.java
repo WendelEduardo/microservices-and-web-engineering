@@ -1,6 +1,7 @@
 package br.com.fiap.mspagamentos.service;
 
 import br.com.fiap.mspagamentos.dto.PagamentoDTO;
+import br.com.fiap.mspagamentos.http.PedidosCliente;
 import br.com.fiap.mspagamentos.model.Pagamento;
 import br.com.fiap.mspagamentos.model.Status;
 import br.com.fiap.mspagamentos.repository.PagamentoRepository;
@@ -21,6 +22,9 @@ public class PagamentoService {
 
     @Autowired
     private PagamentoRepository repository;
+
+    @Autowired
+    private PedidosCliente pedidosCliente;
 
     @Transactional(readOnly = true)  //do spring
     public List<PagamentoDTO> findAll() {
@@ -96,6 +100,9 @@ public class PagamentoService {
         }
         //seta o status do pagamento como confirmado
         pagamento.get().setStatus(Status.CONFIRMADO);
+
+        pedidosCliente.aprovarPagamanetoPedido(id);
+
         //salva a alteração no DB
         repository.save(pagamento.get());
     }

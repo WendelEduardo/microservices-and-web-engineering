@@ -13,7 +13,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "UPDATE p SET p.status = :status WHERE p = :pedido")
+    @Query(value = "UPDATE Pedido p SET p.status = :status WHERE p = :pedido")
     void updateStatus(Status status, Pedido pedido);
 
     @Query(value = "SELECT p FROM Pedido p LEFT JOIN FETCH p.itens WHERE p.id = :id")

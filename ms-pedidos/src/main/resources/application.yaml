@@ -3,17 +3,17 @@ spring:
     active: test
   jpa:
     open-in-view: false
-  #Nome da Aplicação
+  #Nome da Aplicaï¿½ï¿½o
   application:
     name: ms-pedidos
 
 
-#LocalHost que o eureka server esta recebendo as requisições
+#LocalHost que o eureka server esta recebendo as requisiï¿½ï¿½es
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
-#Define a porta do serviço
+#Define a porta do serviï¿½o
 server:
   port: 0
